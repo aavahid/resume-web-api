@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using Resume.Api.AppCode.DI;
+
 namespace Resume.Api
 {
     public class Program
@@ -5,9 +8,17 @@ namespace Resume.Api
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            var app = builder.Build();
+            builder.Host.UseServiceProviderFactory(new ResumeServiceProviderFactory());
 
-            app.MapGet("/", () => "Hello World!");
+            builder.Services.AddDbContext<DbContext>(cfg =>
+            {
+                cfg.UseSqlServer(builder.Configuration.GetConnectionString("cString"),opt =>
+                {
+                    opt.MigrationsHistoryTable("MigrationHistory");
+                });
+            });
+
+            var app = builder.Build();
 
             app.Run();
         }
