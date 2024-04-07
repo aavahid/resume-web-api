@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+	  <PackageReference Include="Autofac" Version="8.0.0" />
+    <ProjectReference Include="..\..\Persistence\Resume.Infrastructure\Resume.Infrastructure.csproj" />
+    <ProjectReference Include="..\Resume.Domain\Resume.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
